@@ -33,6 +33,7 @@ export default {
       },
       // rules是表单校验规则
       rules: {
+        // required代表是否必填, message错误时候的提示,trigger什么时候触发
         username: [{ required: true, message: "请输入账号", trigger: "blur" }],
         password: [{ required: true, message: "请输入密码", trigger: "blur" }]
       }
@@ -45,9 +46,31 @@ export default {
       this.$refs.form.validate(valid => {
         /* valid为真时候提交表单 */
         if (valid) {
+            
           /* 请求登录接口 */
-          console.log(123);
-          
+          this.$axios({
+            url: "/login",
+            method: "POST",
+            data: this.form
+          }).then(res => {
+            const { message, statusCode, data } = res.data;
+            /* 请求失败 */
+            if (statusCode === 401) {
+              this.$message.error(message);
+              return;
+            }
+
+            /* 请求成功 */
+            this.$message.success(message);
+
+            /* 把用户信息保存到本地 */
+            localStorage.setItem("user", JSON.stringify(data));
+
+            /* 跳转到后台管理首页 */
+            setTimeout(() => {
+              this.$router.push("/");
+            }, 1500);
+          });
         }
       });
     }
