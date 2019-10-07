@@ -1,0 +1,85 @@
+<template>
+  <el-container class="container">
+    <!-- 侧边栏 -->
+    <el-aside width="200px">
+      <h3>黑马头条</h3>
+    </el-aside>
+    <!-- 右侧内容部分 -->
+    <el-container>
+      <!-- 头部 -->
+      <el-header>
+        <img :src="$axios.defaults.baseURL+user.user.head_img" alt />
+        <span>{{user.user.nickname}}</span>
+        <i>退出</i>
+      </el-header>
+      <!-- 子页面显示的内容 -->
+      <el-main>Main</el-main>
+    </el-container>
+  </el-container>
+</template>
+
+<script>
+export default {
+  data() {
+    return {
+      user: JSON.parse(localStorage.getItem("user") || `{}`)
+    };
+  },
+  mounted() {}
+};
+</script>
+
+<style scoped lang="less">
+.container {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  width: 100%;
+}
+.el-header {
+  background-color: #333333;
+  color: #cccccc;
+  line-height: 60px;
+  font-size: 14px;
+  text-align: right;
+  * {
+    vertical-align: middle;
+  }
+  img {
+    width: 28px;
+    height: 28px;
+    border-radius: 50px;
+  }
+  span {
+    margin: 0 10px;
+  }
+}
+
+.el-aside {
+  h3 {
+    text-align: center;
+    margin-top: 20px;
+    color: #cccccc;
+  }
+  background-color: #000000;
+  color: #333;
+}
+
+.el-main {
+  background-color: #f2f2f2;
+  color: #333;
+}
+
+body > .el-container {
+  margin-bottom: 40px;
+}
+
+.el-container:nth-child(5) .el-aside,
+.el-container:nth-child(6) .el-aside {
+  line-height: 260px;
+}
+
+.el-container:nth-child(7) .el-aside {
+  line-height: 320px;
+}
+</style>
