@@ -4,28 +4,31 @@
     <el-aside width="200px">
       <h3>黑马头条</h3>
 
-     
-         <!-- default-active：当前高亮选中的菜单 -->
-          <el-menu
-            default-active="1"
-            class="el-menu-vertical-demo"
-          
-            background-color="#545c64"
-            text-color="#fff"
-            active-text-color="#ffd04b"
-          >
-            <!-- index是一标识，给default-actives使用的 -->
-            <el-submenu index="1">
-                <!-- slot="title"必须要保留 -->
-              <template slot="title">
-                <i class="el-icon-location"></i>
-                <span>文章管理</span>
-              </template>
-              <el-menu-item index="1-1">文章列表</el-menu-item>
-              <el-menu-item index="1-2">发布文章</el-menu-item>
-            </el-submenu>
-          </el-menu>
-       
+      <!-- default-active：当前高亮选中的菜单 -->
+      <el-menu
+        default-active="1"
+        class="el-menu-vertical-demo"
+        background-color="#545c64"
+        text-color="#fff"
+        active-text-color="#ffd04b"
+      >
+        <!-- index是一标识，给default-actives使用的 -->
+        <el-submenu index="1">
+          <!-- slot="title"必须要保留 -->
+          <template slot="title">
+            <i class="el-icon-location"></i>
+            <span>文章管理</span>
+          </template>
+
+          <router-link to="/post_list">
+            <el-menu-item index="1-1">文章列表</el-menu-item>
+          </router-link>
+
+          <router-link to="/post_add">
+            <el-menu-item index="1-2">发布文章</el-menu-item>
+          </router-link>
+        </el-submenu>
+      </el-menu>
     </el-aside>
     <!-- 右侧内容部分 -->
     <el-container>
@@ -36,7 +39,10 @@
         <i>退出</i>
       </el-header>
       <!-- 子页面显示的内容 -->
-      <el-main>Main</el-main>
+      <el-main>
+          <!-- 显示子路由匹配的页面 -->
+          <router-view></router-view>
+      </el-main>
     </el-container>
   </el-container>
 </template>
@@ -79,14 +85,14 @@ export default {
 }
 
 .el-aside {
-    width:200px;
+  width: 200px;
   h3 {
     height: 60px;
-      width:200px;
-      line-height: 60px;
-      text-align: center;
-      font-size:18px;
-      color:#eee;
+    width: 200px;
+    line-height: 60px;
+    text-align: center;
+    font-size: 18px;
+    color: #eee;
   }
   background-color: #000000;
   color: #333;
