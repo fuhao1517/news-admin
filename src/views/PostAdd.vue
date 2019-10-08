@@ -1,9 +1,32 @@
 <template>
-  <div>发布文章</div>
+  <div style="width:80%;margin-top:30px;">
+    <el-form ref="form" :model="form" label-width="80px">
+      <el-form-item label="标题">
+        <el-input v-model="form.name"></el-input>
+      </el-form-item>
+
+      <el-form-item label="内容">
+        <el-input type="textarea" :rows="2" placeholder="请输入内容" v-model="form.content"></el-input>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
-export default {};
+export default {
+  data() {
+    return {
+      /* 表单的数据对象 */
+      form: {
+        title: "",
+        content: "",
+        categories: [],
+        cover: [],
+        type: 1
+      }
+    };
+  }
+};
 </script>
 
 <style>
