@@ -40,8 +40,9 @@
       </el-header>
       <!-- 子页面显示的内容 -->
       <el-main>
-          <!-- 显示子路由匹配的页面 -->
-          <router-view></router-view>
+        <div>{{breaks}}</div>
+        <!-- 显示子路由匹配的页面 -->
+        <router-view></router-view>
       </el-main>
     </el-container>
   </el-container>
@@ -53,6 +54,19 @@ export default {
     return {
       user: JSON.parse(localStorage.getItem("user") || `{}`)
     };
+  },
+  /* 监听url地址栏的变化，watch页面一加载时候不会执行，只有等到url变化时候才会执行 */
+  computed: {
+    breaks() {
+      const { matched } = this.$route;
+      const arr = [];
+
+      matched.forEach(v => {
+        arr.push(v.meta);
+      });
+
+      return arr.join("/");
+    }
   },
   mounted() {}
 };

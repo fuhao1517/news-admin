@@ -14,7 +14,7 @@ Vue.config.productionTip = false
 Vue.prototype.$axios = axios;
 
 /* 设置基准路径 */
-axios.defaults.baseURL = "http://localhost:3000"
+axios.defaults.baseURL = "http://localhost:3000";
 
 /* 路由守卫 */
 router.beforeEach((to, from, next) => {
