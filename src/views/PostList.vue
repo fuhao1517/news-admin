@@ -51,7 +51,7 @@
       :page-sizes="[5, 10, 15]"
       :page-size="pageSize"
       layout="total, sizes, prev, pager, next, jumper"
-      :total="100"
+      :total="total"
     ></el-pagination>
   </div>
 </template>
@@ -62,7 +62,8 @@ export default {
     return {
       tableData: [],
       pageIndex: 1,
-      pageSize: 5
+      pageSize: 5,
+      total: 0
     };
   },
   methods: {
@@ -75,7 +76,9 @@ export default {
     },
     // 条数切换时候触发
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.pageSize = val;
+      /* 请求文章列表的数据 */
+      this.getList();
     },
     // 切换页数时候触发
     handleCurrentChange(val) {
@@ -98,6 +101,16 @@ export default {
   mounted() {
     /* 请求文章列表的数据 */
     this.getList();
+
+    /*获取数据的总条数,只针对当前这个项目  */
+    /* 请求文章列表 */
+    this.$axios({
+      url: `/post?pageIndex=${this.pageIndex}&pageSize=9999`
+    }).then(res => {
+      const { data } = res.data;
+      /* 设置条数 */
+      this.total = data.length;
+    });
   }
 };
 </script>
