@@ -17,7 +17,7 @@
           <el-checkbox
             v-for="(item,index) in allCate"
             :key="index"
-            v-if="item.id !==999"
+            v-show="item.id !==999"
             :label="item.id"
             name="type"
           >{{item.name}}</el-checkbox>
@@ -59,7 +59,6 @@
 
 <script>
 import VueEditor from "vue-word-editor";
-// 需要单独引入样式
 import "quill/dist/quill.snow.css";
 export default {
   name: "app",
@@ -81,47 +80,23 @@ export default {
       /* token */
       token: JSON.parse(localStorage.getItem(`user`) || `{}`).token,
       config: {
-        modules: {
-          // 工具栏
-          toolbar: [
-            ["bold", "italic", "underline", "strike"], // toggled buttons
-            ["blockquote", "code-block"],
-            ["image", "video"],
-
-            [{ header: 1 }, { header: 2 }], // custom button values
-            [{ list: "ordered" }, { list: "bullet" }],
-            [{ script: "sub" }, { script: "super" }], // superscript/subscript
-            [{ indent: "-1" }, { indent: "+1" }], // outdent/indent
-            [{ direction: "rtl" }] // text direction
-          ]
-        },
-        // 主题
-        theme: "snow",
+        // 上传图片的配置
         uploadImage: {
           url: "http://localhost:3000/upload",
-          name: "files",
-          uploadBefore(file) {
-            return true;
-          },
-          uploadProgress(res) {},
+          name: "file",
+          // res是结果，insert方法会把内容注入到编辑器中，res.data.url是资源地址
           uploadSuccess(res, insert) {
-            insert("http://localhost:3000" + res.data[0].url);
-          },
-          uploadError() {},
-          showProgress: false
+            insert("http://localhost:3000" + res.data.url);
+          }
         },
 
+        // 上传视频的配置
         uploadVideo: {
-          url: "http://localhost:1337/upload",
-          name: "files",
-          uploadBefore(file) {
-            return true;
-          },
-          uploadProgress(res) {},
+          url: "http://localhost:3000/upload",
+          name: "file",
           uploadSuccess(res, insert) {
-            insert("http://localhost:1337" + res.data[0].url);
-          },
-          uploadError() {}
+            insert("http://localhost:3000" + res.data.url);
+          }
         }
       }
     };
@@ -153,7 +128,9 @@ export default {
         },
         data: this.form
       }).then(res => {
-        console.log(res);
+        const { message } = res.data;
+        this.$message.success(message);
+        location.reload();
       });
     },
 
